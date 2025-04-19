@@ -1,0 +1,12 @@
+This script implements an mpris listener to control a running spcplay.exe (2.21+) (through Wine)
+
+
+TODO:
+ - Fill README
+          └ Dependencies (apt, wine, mpris_server.hpp which itself needs sdbus-c++)
+          └ Setup (where to place files)
+              └ .desktop icon? mimelist entries?
+          └ Example (screenshot)
+ - include libspctag?
+ - links (spcplay, wine, mpris_server, https://github.com/Kistler-Group/sdbus-cpp/)
+ - use https://github.com/ullenius/spctag instead of libspctag?
