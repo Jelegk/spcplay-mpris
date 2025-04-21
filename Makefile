@@ -1,39 +1,37 @@
 .SUFFIXES:
 
-project    := mprisserver-spcplay
-outdir     := build
-files      := main.cpp
-CC         := gcc
-CXX        := g++
-CFLAGS     := -I./external/include -std=c11 -Wall -Wextra -pedantic -Wno-unused-parameter
-CXXFLAGS   := -I./external/include -std=c++20 -Wall -Wextra -pedantic -Wno-unused-parameter
-LDLIBS     := -lfmt $(shell pkg-config --libs sdbus-c++) -lspctag
-flags_deps  = -MMD -MP -MF $(@:.o=.d)
+project      := spcplay-mpris
+builddir     := build
+incflags := -Isrc
+files        := spcplay-mpris.cpp
+LDLIBS       := $(shell pkg-config --libs sdbus-c++) # -lfmt (en premier)
+
+CC           := gcc
+CXX          := g++
+CFLAGS       := -std=c11 -Wall -Wextra -pedantic -Wno-unused-parameter
+CXXFLAGS     := -std=c++20 -Wall -Wextra -pedantic -Wno-unused-parameter
+flags_deps    = -MMD -MP -MF $(@:.o=.d)
 
 
-objs := $(patsubst %,$(outdir)/%.o,$(files))
+objs := $(patsubst %,$(builddir)/%.o,$(files))
 
-.PHONY: all clean install uninstall
+.PHONY: all clean
 
-all: $(outdir)/$(project)
-
-install:
-
-uninstall:
+all: $(builddir)/$(project)
 
 clean:
-	rm -rf $(outdir)
+	rm -rf $(builddir)
 
-$(outdir)/$(project): $(outdir) $(objs)
+$(builddir)/$(project): $(builddir) $(objs)
 	$(CXX) $(objs) -o $@ $(LDLIBS)
 
-$(outdir):
-	mkdir -p $(outdir)
+$(builddir):
+	mkdir -p $(builddir)
 
--include $(outdir)/*.d
+-include $(builddir)/*.d
 
-$(outdir)/%.cpp.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(flags_deps) -c $< -o $@
+$(builddir)/%.cpp.o: src/%.cpp
+	$(CXX) $(CXXFLAGS) $(flags_deps) $(incflags) -c $< -o $@
 
-$(outdir)/%.c.o: %.c
-	$(CC) $(CFLAGS) $(flags_deps) -c $< -o $@
+$(builddir)/%.c.o: src/%.c
+	$(CC) $(CFLAGS) $(flags_deps) $(incflags) -c $< -o $@
