@@ -4,7 +4,7 @@ project      := spcplay-mpris
 builddir     := build
 incflags := -Isrc
 files        := spcplay-mpris.cpp
-LDLIBS       := $(shell pkg-config --libs sdbus-c++) # -lfmt (en premier)
+LDLIBS       := $(shell pkg-config --libs sdbus-c++)
 
 CC           := gcc
 CXX          := g++

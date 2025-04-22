@@ -2,19 +2,19 @@
 
 This program first initializes itself as a client discoverable through MPRIS, then launches [spcplay.exe](https://github.com/dgrfactory/spcplay) through [Wine](https://www.winehq.org/) with the given spc file. Why? Since SPCPlay isn't natively recognized as a media player (mainly because it is a *windows executable*), it cannot be controlled by **media keys** on a keyboard without such a bridge to MPRIS. \
 <br>
-<br>
 
-## Dependencies: sdbus-c++<span style="color:grey"> gcc/g++ make cmake wine spcplay</span>
+## Dependencies: sdbus-c++ (gcc/g++ make cmake wine spcplay)
 
 Included here is the [mpris_server.hpp](https://github.com/chrg127/mpris-server) header-only C++ library, which itself has only one
 dependency: [sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp). Building sdbus-c++ requires cmake.
 
-**TL;DR** \
-Clone the sdbus-c++ repo and execute:
+**TL;DR** Copy-paste this in a terminal
 ```
-$  mkdir build && cd build
-$  cmake .. -DCMAKE_BUILD_TYPE=Release
-$  sudo cmake --build . --target install
+git clone https://github.com/Kistler-Group/sdbus-cpp.git && \
+cd sdbus-cpp && mkdir build && cd build                  && \
+cmake .. -DCMAKE_BUILD_TYPE=Release                      && \
+sudo cmake --build . --target install                    && \
+cd ../.. && rm -rf sdbus-cpp/
 ```
 
 And **that's it.** \
@@ -26,23 +26,21 @@ Spcplay must be version 2.21 or higher, such as [this release](https://github.co
 
 ## Setup
 
-Simply clone this repo and run ```make``` in the root folder.
+ - Clone this repo
+ - In **spcplay-mpris.cpp**, replace the **SPCPLAY_EXE** macro with your path to spcplay.exe (then save)
+ - Run the ```make``` command in the root folder!
+
 The executable will be in the newly created "build" folder. \
 <br>
-<br>
+
 ***(Optional)* Giving the program a desktop entry and icon:**
  - Fill the missing fields from spcplayer.desktop
  - Move spcplayer.desktop to ~/.local/share/applications/
- - Move spcplayer.png to </your/path/to/an/icon.png>
-<!-- TODO: slim (banner) screenshot of the app menu, to see the icon in an example (rofi) -->
-
-<!-- ***(Optional)* Adding a custom SPC file extension to the mimeapps list:** -->
-<!-- TODO:  SPC files are, by default, recognized as "application/x-pkcs7-certificates", but we can also give them a more appropriate name, i.e. "audio/spc-dump" -->
-<!-- TODO: slim (banner) screenshot of the file's "file -b --mime-type" output -->
+ - Move spcplayer.png to </your/path/to/an/icon.png> \
 <br>
 
 ## Usage
 
 ```
-$  spcplay-mpris <path/to/spcplay.exe> <path/to/file.spc>
+spcplay-mpris <path/to/file.spc>
 ```
