@@ -1,4 +1,5 @@
 // NOTE: Handles the most important parts of id666 tags only. (no such thing as xid6)
+// TODO: segfault on "Failed to open ___: No such file or directory"
 // TODO: Add extended id666 capabilities, maybe.
 // TODO: inline functions?
 
@@ -53,7 +54,8 @@ static int _isTagText(const char *s, const int l) {
 
 
 /// @param file the path of the file to extract information
-/// @return a struct of char*, all empty if an error occur
+/// @return a struct of char*, all empty if an error occur, 
+///         except "title" which holds the error message
 id666tag readID666(const char *file) {
     id666tag tag            = { "", "", "", "", "", "", "" };
     char     magicBytes[34] = "";
@@ -62,16 +64,19 @@ id666tag readID666(const char *file) {
     FILE *fSPC = fopen(file, "r");
     if (fSPC == NULL) {
         fprintf(stderr, "Failed to open %s: %s\n", file, strerror(errno));
+        strcpy(tag.title, "__i_am_file_error__");
         goto id666_end;
     }
     fgets(magicBytes, 34, fSPC);
     if (strcmp(magicBytes, MAGIC_BYTES) != 0) {
         fprintf(stderr, "%s is no SPC file\n", file);
+        strcpy(tag.title, "__i_am_no_SPC__");
         goto id666_end;
     }
     fseek(fSPC, 0x23, SEEK_SET);
     if (fgetc(fSPC) != 26) {
         fprintf(stderr, "No ID666 tag in %s\n", file);
+        strcpy(tag.title, "__i_am_no_id666__");
         goto id666_end;
     }
 
