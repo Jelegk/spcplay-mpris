@@ -34,9 +34,9 @@ The executable will be in the newly created "build" folder. \
 <br>
 
 ***(Optional)* Giving the program a desktop entry and icon:**
- - Fill the missing fields from spcplayer.desktop
+ - Fill the missing fields from spcplayer.desktop (then save)
  - Move spcplayer.desktop to ~/.local/share/applications/
- - Move spcplayer.png to </your/path/to/an/icon.png> \
+ - Move spcplayer.png to </your/path/to/spcplayer.png>
 <br>
 
 ## Usage

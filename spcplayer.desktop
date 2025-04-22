@@ -5,6 +5,6 @@ GenericName=SNES SPC700 Player
 Comment=A very simple SPC player for Windows based on SNESAPU.
 Exec=wine <your/path/to/spcplay-mpris> "%f"
 Terminal=false
-Icon=<your/path/to/an/icon>
+Icon=</your/path/to/spcplayer.png>
 Categories=Audio;AudioVideo;Player
 StartupNotify=false
