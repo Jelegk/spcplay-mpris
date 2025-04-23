@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]) {
     if (strcmp(argv[1], "") == 0) argc = 1;
 
     if (argc == 2) {
-        id666tag tag = readID666(argv[1][0] == '\'' ? std::string(argv[1]).substr(1, strlen(argv[1]) - 2).c_str() : argv[1]); // TODO: won't launch from pcmanfm. the .desktop works, and with this workaround it accepts unescaped spaces, but stil.
+        id666tag tag = readID666(argv[1][0] == '\'' ? std::string(argv[1]).substr(1, strlen(argv[1]) - 3).c_str() : argv[1]); // Remove quotes
         if (strcmp(tag.title, "__i_am_file_error__") == 0 || strcmp(tag.title, "__i_am_no_SPC__") == 0)
             return 3;
 
